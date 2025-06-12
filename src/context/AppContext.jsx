@@ -31,6 +31,14 @@ export const AppContextProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+
   const addToCart = (itemId) => {
     let cart = structuredClone(cartItems);
     if (cart[itemId]) cart[itemId] += 1;
@@ -90,6 +98,7 @@ export const AppContextProvider = ({ children }) => {
         setSearchQuery,
         count,
         getCartTotal,
+        formatDate,
       }}
     >
       {children}
