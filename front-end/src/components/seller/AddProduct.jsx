@@ -38,6 +38,7 @@ const AddProduct = () => {
                     type="file"
                     id={`image${index}`}
                     hidden
+                    name="images"
                     onChange={(e) => {
                       const updatedImages = [...product.image];
                       updatedImages[index] = e.target.files[0];
