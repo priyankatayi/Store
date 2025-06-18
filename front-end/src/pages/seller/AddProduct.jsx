@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { categories, assets } from "../../assets/assets";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     category: "",
     price: "",
-    offerPrice: "",
     image: [],
+    offerPrice: "",
     description: "",
   });
+
+  const { navigate, axios } = useAppContext();
 
   const onChangeHandler = (e) => {
     e.preventDefault();
@@ -17,8 +21,43 @@ const AddProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
+  const addProduct = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", product.name);
+      formData.append("category", product.category);
+      formData.append("price", product.price);
+      formData.append("offerPrice", product.offerPrice);
+      formData.append("description", product.description.split("/n"));
+      product.image.forEach((file) => formData.append("image", file));
+      const { data } = await axios.post("/api/product/add", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (data.success) {
+        toast.success(data.message);
+        //Reset the form
+        setProduct({
+          name: "",
+          category: "",
+          price: "",
+          image: [],
+          offerPrice: "",
+          description: "",
+        });
+        navigate("/seller/product-list");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    addProduct();
   };
   return (
     <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
@@ -38,7 +77,7 @@ const AddProduct = () => {
                     type="file"
                     id={`image${index}`}
                     hidden
-                    name="images"
+                    name="image"
                     onChange={(e) => {
                       const updatedImages = [...product.image];
                       updatedImages[index] = e.target.files[0];

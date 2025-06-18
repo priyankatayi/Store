@@ -18,7 +18,7 @@ await connectDB();
 await connectCloudinary();
 
 //Allow multiple origins
-const allowedOrigin = ['http://localhost:5173/']
+const allowedOrigin = ['http://localhost:5173']
 
 //Middleware configuration
 

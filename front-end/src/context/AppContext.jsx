@@ -1,14 +1,17 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyProducts } from "../assets/assets";
 import toast from "react-hot-toast";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const AppContext = createContext();
 
 export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }) => {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [products, setProducts] = useState([]);
@@ -17,16 +20,56 @@ export const AppContextProvider = ({ children }) => {
   const [count, setCount] = useState();
   const currency = import.meta.env.VITE_CURRENCY;
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setProducts(dummyProducts);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
+  //fetch user status
 
+  const isUserAutheticated = async () => {
+    try {
+      const { data } = await axios.get("/api/user/is-auth");
+      if (data.success) {
+        setUser(data.user);
+        setCartItems(data.user.cartItems);
+      } else {
+        setUser({});
+        toast.error(data.message);
+      }
+    } catch (error) {
+      setUser(null);
+      toast.error(error.message);
+    }
+  };
+
+  //fetch Seller status
+  const isSellerAutheticated = async () => {
+    try {
+      const { data } = await axios.get("/api/seller/is-auth");
+      if (data.success) {
+        setIsSeller(true);
+      } else {
+        setIsSeller(false);
+      }
+    } catch (error) {
+      setIsSeller(false);
+      toast.error(error.message);
+    }
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get("/api/product/list");
+      if (data.success) {
+        setProducts(data.products);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    isSellerAutheticated();
     fetchProducts();
+    isUserAutheticated();
   }, []);
 
   const navigate = useNavigate();
@@ -88,6 +131,7 @@ export const AppContextProvider = ({ children }) => {
         setShowUserLogin,
         showUserLogin,
         products,
+        fetchProducts,
         currency,
         cartItems,
         setCartItems,
@@ -99,6 +143,7 @@ export const AppContextProvider = ({ children }) => {
         count,
         getCartTotal,
         formatDate,
+        axios,
       }}
     >
       {children}

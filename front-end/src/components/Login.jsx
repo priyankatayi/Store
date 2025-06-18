@@ -1,21 +1,32 @@
 import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const { showUserLogin, setShowUserLogin, setUser } = useAppContext();
+  const { setShowUserLogin, setUser, axios, navigate } = useAppContext();
   const [state, setState] = useState("login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmitHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
-    setUser({
-      name,
-      email,
-      password,
-    });
-    setShowUserLogin(false);
+    try {
+      const { data } = await axios.post(`/api/user/${state}`, {
+        email,
+        password,
+        name,
+      });
+      if (data.success) {
+        setUser(data.user);
+        setShowUserLogin(false);
+        navigate("/");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   return (
     <div
@@ -23,7 +34,7 @@ const Login = () => {
       onClick={() => setShowUserLogin(false)}
     >
       <form
-        onSubmit={(e) => onSubmitHandler(e)}
+        onSubmit={(e) => loginHandler(e)}
         onClick={(e) => e.stopPropagation()}
         className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white"
       >

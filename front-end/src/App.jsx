@@ -14,10 +14,10 @@ import Cart from "./pages/Cart";
 import AddAddress from "./pages/AddAddress";
 import MyOrders from "./pages/MyOrders";
 import SellerLogin from "./components/seller/SellerLogin";
-import SellerLayout from "./components/seller/SellerLayout";
-import Orders from "./components/seller/Orders";
-import ProductList from "./components/seller/ProductList";
-import AddProduct from "./components/seller/AddProduct";
+import SellerLayout from "./pages/seller/SellerLayout";
+import Orders from "./pages/seller/Orders";
+import ProductList from "./pages/seller/ProductList";
+import AddProduct from "./pages/seller/AddProduct";
 
 function App() {
   const isSellerPath = useLocation().pathname.includes("seller");
