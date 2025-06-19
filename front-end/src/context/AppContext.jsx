@@ -29,7 +29,7 @@ export const AppContextProvider = ({ children }) => {
         setUser(data.user);
         setCartItems(data.user.cartItems);
       } else {
-        setUser({});
+        setUser(null);
         toast.error(data.message);
       }
     } catch (error) {
@@ -44,14 +44,35 @@ export const AppContextProvider = ({ children }) => {
       const { data } = await axios.get("/api/seller/is-auth");
       if (data.success) {
         setIsSeller(true);
+        toast.success(data.message);
       } else {
         setIsSeller(false);
+        toast.error(data.message);
       }
     } catch (error) {
       setIsSeller(false);
       toast.error(error.message);
     }
   };
+
+  //add user cart items
+
+  const updateCartItems = async () => {
+    try {
+      const { data } = await axios.post("/api/cart/update", { cartItems });
+      if (!data.success) {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      updateCartItems();
+    }
+  }, [cartItems]);
 
   const fetchProducts = async () => {
     try {

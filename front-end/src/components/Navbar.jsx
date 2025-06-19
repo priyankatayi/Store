@@ -13,13 +13,23 @@ function Navbar() {
     setSearchQuery,
     searchQuery,
     count,
-    getCartTotal,
+    axios,
   } = useAppContext();
 
-  const logout = () => {
-    setOpen(false);
-    setUser(null);
-    navigate("/");
+  const logout = async () => {
+    try {
+      const { data } = await axios.get("/api/user/logout");
+      console.log(data, "data");
+      if (data.success) {
+        setUser(null);
+        toast.success(data.message);
+        navigate("/");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {

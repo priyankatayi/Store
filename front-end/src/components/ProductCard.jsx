@@ -4,8 +4,7 @@ import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-  const { currency, updateCart, addToCart, removeFromCart, cartItems } =
-    useAppContext();
+  const { currency, addToCart, removeFromCart, cartItems } = useAppContext();
 
   const navigate = useNavigate();
 
