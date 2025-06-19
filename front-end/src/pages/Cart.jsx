@@ -11,6 +11,7 @@ const Cart = () => {
   const {
     products,
     cartItems,
+    setCartItems,
     getCartTotal,
     currency,
     removeFromCart,
@@ -55,6 +56,30 @@ const Cart = () => {
 
     setCartProducts(updatedCartProducts);
   }, [cartItems, products]);
+
+  const SubmitOrder = async () => {
+    try {
+      const { data } = await axios.post(
+        `/api/order/${paymentMethod.toLowerCase()}`,
+        {
+          address: selectedAddress._id,
+          items: cartProducts.map((item) => ({
+            product: item._id,
+            quantity: item.quantity,
+          })),
+        },
+      );
+      if (data.success) {
+        setCartItems({});
+        navigate("/my-orders");
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return products.length && cartItems ? (
     <div className="flex flex-col md:flex-row mt-16">
@@ -257,7 +282,10 @@ const Cart = () => {
           </p>
         </div>
 
-        <button className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition">
+        <button
+          onClick={SubmitOrder}
+          className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+        >
           {paymentMethod === "COD" ? "Place Order" : "Proceed to Checkout"}
         </button>
       </div>

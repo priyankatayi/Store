@@ -11,7 +11,7 @@ export const generateToken = (user, res) => {
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', //CSRF protecion
         maxAge: 7 * 24 * 60 * 60 * 1000, // cookie expiration time in seconds
     })    
-    res.json({success: true, user: { name: user.name, email: user.email }}) 
+    res.json({success: true, user}) 
 }
 //Register User api/user/register
 export const register = async (req, res) => {

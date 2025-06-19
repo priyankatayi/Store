@@ -1,15 +1,15 @@
 import Product from "../models/Product.js";
-
+import Order from "../models/Orders.js";
 
 //api/order/cod 
 export const placeOrderCOD = async (req, res) => {
     try{
-        const { userId, address, items } = req.body;
-
+        const { address, items } = req.body;
+        const { userId } = req;
         if(!address || items.length <=0) {
             return res.json({success: false, message: 'Invalid Order'})
         }
-        const amount = items.reduce(async(item, acc) => {
+        let amount = await items.reduce(async(acc, item) => {
             let product = await Product.findById(item.product);
             return (await acc) + product.offerPrice * item.quantity;        
         }, 0);
@@ -22,7 +22,8 @@ export const placeOrderCOD = async (req, res) => {
             paymentType: 'COD',
             address,
             items,
-            amount
+            amount,
+            status: 'placed'
         });
         res.json({ success: true, message: 'Order placed successfully' })
     } catch(error) {
@@ -34,7 +35,7 @@ export const placeOrderCOD = async (req, res) => {
 // api/order/user
 export const getUserOrders = async (req, res) => {
     try{
-        const { userId } = req.body;
+        const { userId } = req;
         const orders = await Order.find({ 
             userId,
             $or: [{paymentType: "COD"}, {isPaid: true}]
