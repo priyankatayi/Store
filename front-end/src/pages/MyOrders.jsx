@@ -1,18 +1,30 @@
 import { useState, useEffect } from "react";
-import { dummyOrders } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
 function MyOrders() {
   const [myOrders, setMyOrders] = useState([]);
-  const { currency, formatDate } = useAppContext();
+  const { currency, formatDate, axios, user } = useAppContext();
 
   const fetchMyOrders = async () => {
-    await setMyOrders(dummyOrders);
+    try {
+      const { data } = await axios.get("/api/order/user");
+      if (data.success) {
+        setMyOrders(data.orders);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
-    fetchMyOrders();
-  }, []);
+    if (user) {
+      fetchMyOrders();
+    }
+  }, [user]);
+
   const boxIcon =
     "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/boxIcon.svg";
 

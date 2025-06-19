@@ -21,7 +21,6 @@ function Navbar() {
   const logout = async () => {
     try {
       const { data } = await axios.get("/api/user/logout");
-      console.log(data, "data");
       if (data.success) {
         setUser(null);
         setCartItems({});

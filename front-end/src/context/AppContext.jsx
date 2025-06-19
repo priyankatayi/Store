@@ -125,7 +125,6 @@ export const AppContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(cartItems);
     const count = Object.values(cartItems).reduce((acc, item) => acc + item, 0);
     setCount(count);
   }, [cartItems]);
