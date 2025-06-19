@@ -44,8 +44,11 @@ function App() {
             element={isSeller ? <SellerLayout /> : <SellerLogin />}
           >
             <Route index element={isSeller ? <AddProduct /> : null} />
-            <Route path="product-list" element={<ProductList />} />
-            <Route path="my-orders" element={<Orders />} />
+            <Route
+              path="product-list"
+              element={isSeller ? <ProductList /> : null}
+            />
+            <Route path="my-orders" element={isSeller ? <Orders /> : null} />
           </Route>
         </Routes>
         {!isSellerPath ? <Footer /> : null}

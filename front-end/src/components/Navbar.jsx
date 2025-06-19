@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
 function Navbar() {
   const [open, setOpen] = React.useState(false);
@@ -12,6 +13,7 @@ function Navbar() {
     setShowUserLogin,
     setSearchQuery,
     searchQuery,
+    setCartItems,
     count,
     axios,
   } = useAppContext();
@@ -22,6 +24,7 @@ function Navbar() {
       console.log(data, "data");
       if (data.success) {
         setUser(null);
+        setCartItems({});
         toast.success(data.message);
         navigate("/");
       } else {

@@ -30,7 +30,6 @@ export const AppContextProvider = ({ children }) => {
         setCartItems(data.user.cartItems);
       } else {
         setUser(null);
-        toast.error(data.message);
       }
     } catch (error) {
       setUser(null);
@@ -47,7 +46,6 @@ export const AppContextProvider = ({ children }) => {
         toast.success(data.message);
       } else {
         setIsSeller(false);
-        toast.error(data.message);
       }
     } catch (error) {
       setIsSeller(false);
@@ -89,8 +87,8 @@ export const AppContextProvider = ({ children }) => {
 
   useEffect(() => {
     isSellerAutheticated();
-    fetchProducts();
     isUserAutheticated();
+    fetchProducts();
   }, []);
 
   const navigate = useNavigate();

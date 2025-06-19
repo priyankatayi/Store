@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { dummyAddress } from "../assets/assets";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const [showAddress, setShowAddress] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
+  const [address, setAddress] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [address, setAddress] = useState(dummyAddress);
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const {
     products,
@@ -17,19 +17,37 @@ const Cart = () => {
     updateCart,
     navigate,
     count,
+    axios,
+    user,
   } = useAppContext();
-  console.log(
-    address.map((add) => {
-      console.log(add.street, add);
-    }),
-    "address",
-  );
+
+  const getAddress = async () => {
+    try {
+      const { data } = await axios.get("/api/address/get");
+      if (data.success) {
+        setAddress(data.address);
+        if (data.address.length > 0) {
+          setSelectedAddress(data.address[0]);
+        }
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      getAddress();
+    }
+  }, [user]);
+
   useEffect(() => {
     let updatedCartProducts = [];
 
     for (let key in cartItems) {
       const product = products.find((item) => item._id === key);
-      console.log(product, "cartItem");
       if (product) {
         updatedCartProducts.push({ ...product, quantity: cartItems[key] });
       }

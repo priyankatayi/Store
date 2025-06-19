@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
@@ -18,7 +18,7 @@ const InputField = ({ name, type, placeholder, onChange, address }) => {
 };
 
 function AddAddress() {
-  const { navigate, axios } = useAppContext();
+  const { navigate, axios, user } = useAppContext();
 
   const [address, setAddress] = useState({
     firstName: "",
@@ -31,6 +31,12 @@ function AddAddress() {
     zipcode: "",
     phone: "",
   });
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/cart");
+    }
+  }, []);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

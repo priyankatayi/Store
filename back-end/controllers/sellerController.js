@@ -28,7 +28,7 @@ export const sellerLogin = async (req, res) => {
 
 export const isSellerAuth = async(req, res) => {
     try {
-        res.json({ success: 'true' });
+        res.json({ success: true, message: 'Seller Logged In' });
     } catch(error) {
         res.json({ success: false, message: error.message });
     }
@@ -42,7 +42,7 @@ export const sellerLogout = async (req, res) => {
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', //CSRF protecion
         maxAge: 7 * 24 * 60 * 60 * 1000, // cookie expiration time in seconds
     });
-    res.json({ success: 'true', message: 'Logout successful' })
+    res.json({ success: 'true', message: 'Seller Logout successful' })
 }
     catch(error) {
         res.json({ success: false, message: error.message })
