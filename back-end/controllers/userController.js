@@ -1,6 +1,6 @@
 // Using the User Model, userController will create User in database
 import bcrypt from 'bcryptjs';
-import User from '../models/user.js';
+import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 
 export const generateToken = (user, res) => {    
