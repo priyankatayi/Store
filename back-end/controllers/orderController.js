@@ -6,7 +6,6 @@ import Stripe from 'stripe';
 
 //Stripe webhooks to verify payments
 export const stripeWebHooks = async (req, res) => {
-    console.log("web hook triggered");
     //create stripe instance
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -21,6 +20,8 @@ export const stripeWebHooks = async (req, res) => {
     }
     //event.data.object contains the full session object data
     const session = event.data.object;
+    
+    console.log("session", session);
     const {metadata} = session;
     const { userId, orderId} = metadata;
     switch(event.type) {
