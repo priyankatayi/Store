@@ -20,8 +20,7 @@ export const stripeWebHooks = async (req, res) => {
     }
     //event.data.object contains the full session object data
     const session = event.data.object;
-    
-    console.log("session", session);
+   
     const {metadata} = session;
     const { userId, orderId} = metadata;
     switch(event.type) {

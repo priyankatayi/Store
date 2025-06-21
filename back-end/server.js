@@ -20,7 +20,7 @@ await connectDB();
 await connectCloudinary();
 
 //Allow multiple origins
-const allowedOrigin = ['http://localhost:5173']
+const allowedOrigin = ['http://localhost:5173', 'https://store-alpha-weld.vercel.app']
 
 //Preserves raw body so Stripe can verify signature - so use express.raw() for the webhook route only
 app.post('/stripe',  express.raw({ type: 'application/json' }), stripeWebHooks);
