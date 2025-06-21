@@ -59,22 +59,35 @@ const Cart = () => {
 
   const SubmitOrder = async () => {
     try {
-      const { data } = await axios.post(
-        `/api/order/${paymentMethod.toLowerCase()}`,
-        {
+      if (paymentMethod === "COD") {
+        const { data } = await axios.post("/api/order/cod", {
           address: selectedAddress._id,
           items: cartProducts.map((item) => ({
             product: item._id,
             quantity: item.quantity,
           })),
-        },
-      );
-      if (data.success) {
-        setCartItems({});
-        navigate("/my-orders");
-        toast.success(data.message);
+        });
+        if (data.success) {
+          setCartItems({});
+          navigate("/my-orders");
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
       } else {
-        toast.error(data.message);
+        const { data } = await axios.post("/api/order/stripe", {
+          address: selectedAddress._id,
+          items: cartProducts.map((item) => ({
+            product: item._id,
+            quantity: item.quantity,
+          })),
+        });
+        if (data.success) {
+          window.location.replace(data.url);
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (error) {
       toast.error(error.message);

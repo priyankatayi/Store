@@ -1,22 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { assets, dummyOrders } from "../../assets/assets";
+import { useEffect, useState } from "react";
+import { assets } from "../../assets/assets";
 import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 function Orders() {
   const boxIcon =
     "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/boxIcon.svg";
 
-  const { formatDate, currency } = useAppContext();
+  const { isSeller, currency, axios } = useAppContext();
 
   const [orders, setOrders] = useState([]);
 
   const fetchMyOrders = async () => {
-    await setOrders(dummyOrders);
+    try {
+      const { data } = await axios.get("/api/order/all");
+      if (data.success) {
+        setOrders(data.orders);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
-    fetchMyOrders();
-  }, []);
+    if (isSeller) {
+      fetchMyOrders();
+    }
+  }, [isSeller]);
 
   return (
     <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll">

@@ -1,5 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import connectDB from './configs/db.js';
 import 'dotenv/config';
@@ -10,6 +11,7 @@ import connectCloudinary from './configs/cloudinary.js';
 import cartRouter from './routes/cartRoute.js';
 import addressRouter from './routes/addressRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import { stripeWebHooks } from './controllers/orderController.js';
 
 const app = express();
 const port = process.env.PORT || 4000
@@ -20,8 +22,11 @@ await connectCloudinary();
 //Allow multiple origins
 const allowedOrigin = ['http://localhost:5173']
 
-//Middleware configuration
+//Preserves raw body so Stripe can verify signature - so use express.raw() for the webhook route only
+app.post('/webhooks',  express.raw({ type: 'application/json' }), stripeWebHooks);
 
+
+//Middleware configuration
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({origin: allowedOrigin, credentials: true}))
