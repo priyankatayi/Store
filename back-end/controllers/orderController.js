@@ -6,6 +6,7 @@ import Stripe from 'stripe';
 
 //Stripe webhooks to verify payments
 export const stripeWebHooks = async (req, res) => {
+    console.log("web hook triggered");
     //create stripe instance
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -28,7 +29,7 @@ export const stripeWebHooks = async (req, res) => {
             await User.findByIdAndUpdate(userId, {cartItems: {}});
             break;
         }
-        case 'payment_intent.failed': {
+        case 'payment_intent.payment_failed': {
             await Order.findByIdAndDelete(orderId);
             break;
         }
@@ -74,7 +75,7 @@ export const placeOrderStripe = async (req, res) => {
             address,
             items,
             amount,
-            status: 'placed'
+            status: 'Order Placed'
         });
 
         //create stripe instance
