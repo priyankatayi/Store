@@ -94,6 +94,7 @@ export const placeOrderStripe = async (req, res) => {
             success_url: `${origin}/my-orders`,
             cancel_url:  `${origin}/cart`,
           });
+          console.log(session, "session in checkout")
         res.json({ success: true, url: session.url })
     } catch(error) {
         res.json({success: false, message: error.message})
