@@ -48,9 +48,14 @@ function Navbar() {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
+        <button
+          onClick={() => navigate("/seller")}
+          className="px-3 py-1 text-sm text-green-700 bg-green-100 border border-green-200 rounded-full hover:bg-green-200 transition"
+        >
+          Seller Dashboard
+        </button>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/products">Products</NavLink>
-        <NavLink to="/contact">Contact</NavLink>
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input
@@ -168,6 +173,15 @@ function Navbar() {
         <div
           className={`${open ? "flex" : "hidden"} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
         >
+          <button
+            onClick={() => {
+              navigate("/seller");
+              setOpen(false);
+            }}
+            className="w-full text-left px-3 py-2 text-sm text-green-700 border border-green-200 rounded-md bg-green-100 hover:bg-green-200 transition"
+          >
+            Seller Dashboard
+          </button>
           <NavLink to="/" onClick={() => setOpen(false)}>
             Home
           </NavLink>

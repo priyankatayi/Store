@@ -7,7 +7,7 @@
 
 @theme {
   --color-primary: oklch(58.5% 0.233 277.117);
-  --color-primary-dull: #44ae7c;
+  --color-primary-dull: #d1fae5;
 }
 
 .no-scrollbar::-webkit-scrollbar {

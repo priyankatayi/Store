@@ -20,9 +20,11 @@ function AllProducts() {
       <p className="text-2xl md:text-3xl font-medium">All Products</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 lg:grid-cols-5 mt-6">
         {filteredList?.length ? (
-          filteredList.map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))
+          filteredList
+            .filter((item) => item.inStock)
+            .map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))
         ) : (
           <p>Loading...</p>
         )}

@@ -75,9 +75,7 @@ function MyOrders() {
               {/* Amount */}
               <div className="text-right">
                 {currency}
-                {((order.amount / order.items.length) * item.quantity).toFixed(
-                  2,
-                )}
+                {item.quantity * item.product.offerPrice}
               </div>
             </div>
           ))}
