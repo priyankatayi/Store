@@ -92,11 +92,11 @@ function ProductDetails() {
 
             <div className="mt-6">
               <p className="text-gray-500/70 line-through">
-                MRP: {currency}
+                {currency}
                 {product.price}
               </p>
               <p className="text-2xl font-medium">
-                MRP: {currency}
+                {currency}
                 {product.offerPrice}
               </p>
               <span className="text-gray-500/70">(inclusive of all taxes)</span>
@@ -138,7 +138,7 @@ function ProductDetails() {
               relatedProducts
                 .filter((item) => item.inStock)
                 .map((product, index) => (
-                  <ProductCard key={index} product={product} />
+                  <ProductCard key={product._id} product={product} />
                 ))}
           </div>
           <button

@@ -23,12 +23,14 @@ function App() {
   const isSellerPath = useLocation().pathname.includes("seller");
   const { showUserLogin, isSeller } = useAppContext();
   return (
-    <div className="text-default min-h-screen text-gray-700 bg-white">
-      {!isSellerPath ? <Navbar /> : null}
-      {showUserLogin ? <Login /> : null}
+    <div className="flex flex-col min-h-screen bg-white text-gray-700">
+      {!isSellerPath && <Navbar />}
+      {showUserLogin && <Login />}
       <Toaster />
-      <div
-        className={`${isSellerPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}`}
+
+      {/* Main content */}
+      <main
+        className={`flex-grow ${isSellerPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}`}
       >
         <Routes>
           <Route path="/" element={<Home />} />
@@ -51,8 +53,10 @@ function App() {
             <Route path="my-orders" element={isSeller ? <Orders /> : null} />
           </Route>
         </Routes>
-        {!isSellerPath ? <Footer /> : null}
-      </div>
+      </main>
+
+      {/* Footer only on non-seller paths */}
+      {!isSellerPath && <Footer />}
     </div>
   );
 }

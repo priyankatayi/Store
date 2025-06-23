@@ -28,7 +28,9 @@ const AddProduct = () => {
       formData.append("category", product.category);
       formData.append("price", product.price);
       formData.append("offerPrice", product.offerPrice);
-      formData.append("description", product.description.split("/n"));
+      product.description.split("\n").forEach((line) => {
+        formData.append("description[]", line);
+      });
       product.image.forEach((file) => formData.append("image", file));
       const { data } = await axios.post("/api/product/add", formData, {
         headers: {

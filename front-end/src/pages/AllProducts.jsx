@@ -23,7 +23,7 @@ function AllProducts() {
           filteredList
             .filter((item) => item.inStock)
             .map((product, index) => (
-              <ProductCard key={index} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))
         ) : (
           <p>Loading...</p>
