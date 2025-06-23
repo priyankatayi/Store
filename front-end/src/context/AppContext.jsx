@@ -21,7 +21,6 @@ export const AppContextProvider = ({ children }) => {
   const currency = import.meta.env.VITE_CURRENCY;
 
   //fetch user status
-
   const isUserAutheticated = async () => {
     try {
       const { data } = await axios.get("/api/user/is-auth");
@@ -54,7 +53,6 @@ export const AppContextProvider = ({ children }) => {
   };
 
   //add user cart items
-
   const updateCartItems = async () => {
     try {
       const { data } = await axios.post("/api/cart/update", { cartItems });
