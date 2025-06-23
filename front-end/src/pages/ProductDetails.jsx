@@ -28,7 +28,7 @@ function ProductDetails() {
         <p>
           <Link to="/">Home</Link> /<Link to="/products"> Products</Link> /
           <Link to={`/products/${category}`}> {category}</Link> /
-          <span className="text-indigo-500"> {product.name}</span>
+          <span className="text-primary"> {product.name}</span>
         </p>
 
         <div className="flex flex-col md:flex-row gap-16 mt-4">
@@ -121,7 +121,7 @@ function ProductDetails() {
                   addToCart(product._id);
                   navigate("/cart");
                 }}
-                className="w-full py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition"
+                className="w-full py-3.5 cursor-pointer font-medium bg-primary text-white hover:bg-primary transition"
               >
                 Buy now
               </button>
