@@ -83,7 +83,7 @@ shopping-cart/
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/grocery-store.git
+git clone https://github.com/priyankatayi/shopping-cart.git
 cd shopping-cart
 ```
 
@@ -167,4 +167,4 @@ CVC: Any 3 digits
 
 **Priyanka Tayi** – [tayi.priyanka@gmail.com](mailto:tayi.priyanka@gmail.com)
 
-Project Link: [https://github.com/priyankatayi/Store.git](https://github.com/priyankatayi/Store.git)
+Project Link: [https://github.com/priyankatayi/shopping-cart](https://github.com/priyankatayi/shopping-cart)
