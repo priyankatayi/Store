@@ -98,13 +98,17 @@ touch .env
 #### `.env` example:
 
 ```
-PORT=5000
-MONGO_URI=your_mongo_connection_string
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_key
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+MONGODB_URI="your_mongodb_connection_string"
+JWT_SECRET="your_jwt_secret_key"
+NODE_ENV="development"
+SELLER_EMAIL="admin@example.com"
+SELLER_PASSWORD="admin123"
+CLOUDINARY_CLOUD_NAME="your_cloudinary_name"
+CLOUDINARY_API_KEY="your_cloudinary_api_key"
+CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
+STRIPE_PUBLISHABLE_KEY="your_stripe_publishable_key"
+STRIPE_SECRET_KEY="your_stripe_secret_key"
+STRIPE_WEBHOOKS_SECRET="your_stripe_webhooks_secret"
 ```
 
 ```bash
@@ -163,4 +167,4 @@ CVC: Any 3 digits
 
 **Priyanka Tayi** – [tayi.priyanka@gmail.com](mailto:tayi.priyanka@gmail.com)
 
-Project Link: [https://github.com/priyankatayi/Store](https://github.com/priyankatayi/Store)
+Project Link: [https://github.com/priyankatayi/Store.git](https://github.com/priyankatayi/Store.git)
