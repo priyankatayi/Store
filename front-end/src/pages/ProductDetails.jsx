@@ -14,7 +14,7 @@ function ProductDetails() {
 
   useEffect(() => {
     setThumbnail(product?.image[0]);
-  }, [products]);
+  }, [product]);
 
   useEffect(() => {
     setRelatedProducts(
