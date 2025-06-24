@@ -58,39 +58,41 @@ const Cart = () => {
   }, [cartItems, products]);
 
   const SubmitOrder = async () => {
+    if (!user) return toast.error("Please login to place order");
+
+    if (!selectedAddress || address.length < 1) {
+      return toast.error("Please select an address");
+    }
+
+    const orderPayload = {
+      address: selectedAddress._id,
+      items: cartProducts.map((item) => ({
+        product: item._id,
+        quantity: item.quantity,
+      })),
+    };
+
     try {
       if (paymentMethod === "COD") {
-        const { data } = await axios.post("/api/order/cod", {
-          address: selectedAddress._id,
-          items: cartProducts.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
-        });
+        const { data } = await axios.post("/api/order/cod", orderPayload);
         if (data.success) {
           setCartItems({});
           navigate("/my-orders");
           toast.success(data.message);
         } else {
-          toast.error(data.message);
+          toast.error(data.message || "Order failed");
         }
       } else {
-        const { data } = await axios.post("/api/order/stripe", {
-          address: selectedAddress._id,
-          items: cartProducts.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
-        });
-        if (data.success) {
+        const { data } = await axios.post("/api/order/stripe", orderPayload);
+        if (data.success && data.url) {
           window.location.replace(data.url);
-          toast.success(data.message);
         } else {
-          toast.error(data.message);
+          toast.error(data.message || "Stripe session failed");
         }
       }
     } catch (error) {
-      toast.error(error.message);
+      console.error(error);
+      toast.error(error.message || "Something went wrong");
     }
   };
 

@@ -71,16 +71,16 @@ function Navbar() {
           <img className="w-4 h-4" src={assets.search_icon} alt="search icon" />
         </div>
 
-        <div className="relative cursor-pointer">
+        <div
+          className="relative cursor-pointer"
+          onClick={() => navigate("/cart")}
+        >
           <img
             className="w-6 opacity-80"
             src={assets.cart_icon}
             alt="cart icon"
           />
-          <button
-            onClick={() => navigate("/cart")}
-            className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full"
-          >
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
             {count}
           </button>
         </div>
