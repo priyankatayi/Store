@@ -25,60 +25,62 @@ function MyOrders() {
     }
   }, [user]);
 
-  const boxIcon =
-    "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/boxIcon.svg";
-
   return (
-    <div className="p-6 space-y-6 max-w-4xl mx-auto">
+    <div className="p-4 sm:p-6 space-y-6 max-w-4xl mx-auto">
       <h2 className="text-xl font-semibold text-gray-800">My Orders</h2>
 
       {myOrders.map((order, index) => (
         <div key={index} className="border rounded-md p-4 space-y-4 shadow-sm">
-          {/* Order Summary */}
-          <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 border-b pb-2">
-            <div>Order #: {order._id}</div>
-            <div className="text-center">
-              Date: {formatDate(order.createdAt)}
-            </div>
-            <div className="text-right">
-              Total: {currency}
-              {order.amount}
-            </div>
-          </div>
-
-          {/* Items Header */}
-          <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-gray-600 border-b pb-2">
-            <span>Item</span>
-            <span className="text-center">Quantity</span>
-            <span className="text-right">Amount</span>
-          </div>
-
-          {/* Items List */}
-          {order.items.map((item, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-3 gap-4 items-center text-sm text-gray-800 py-2"
-            >
-              {/* Item Column: Image + Name */}
-              <div className="flex items-center gap-3">
-                <img
-                  src={item.product.image[0]}
-                  alt={item.product.name}
-                  className="w-16 h-16 object-cover bg-gray-100 rounded"
-                />
-                <span>{item.product.name}</span>
+          <div className="flex flex-col sm:flex-row justify-between gap-2 text-sm font-medium text-gray-700 border-b pb-2">
+            <div className="space-y-1">
+              <div className="flex flex-wrap gap-1">
+                <span className="text-gray-600">Order #:</span>
+                <span className="break-all">{order._id}</span>
               </div>
-
-              {/* Quantity */}
-              <div className="text-center">{item.quantity}</div>
-
-              {/* Amount */}
-              <div className="text-right">
+              <div className="flex flex-wrap gap-1 text-xs text-gray-500">
+                <span className="text-gray-600">Date:</span>
+                <span>{formatDate(order.createdAt)}</span>
+              </div>
+            </div>
+            <div className="flex items-start sm:items-center sm:justify-end mt-2 sm:mt-0">
+              <span className="text-gray-600 mr-1">Total:</span>
+              <span>
                 {currency}
-                {item.quantity * item.product.offerPrice}
-              </div>
+                {order.amount}
+              </span>
             </div>
-          ))}
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm text-left text-gray-800 table-fixed">
+              <thead className="border-b text-gray-600 font-semibold">
+                <tr>
+                  <th className="py-2 w-1/2">Item</th>
+                  <th className="py-2 w-1/4 text-center">Quantity</th>
+                  <th className="py-2 w-1/4 text-right">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {order.items.map((item, idx) => (
+                  <tr key={idx} className="border-b last:border-b-0">
+                    <td className="py-3 flex items-center gap-3 overflow-hidden">
+                      <img
+                        src={item.product.image[0]}
+                        alt={item.product.name}
+                        className="w-16 h-16 object-cover bg-gray-100 rounded shrink-0"
+                      />
+                      <span className="break-words">{item.product.name}</span>
+                    </td>
+                    <td className="py-3 text-center">{item.quantity}</td>
+                    <td className="py-3 text-right">
+                      {currency}
+                      {item.quantity * item.product.offerPrice}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       ))}
     </div>

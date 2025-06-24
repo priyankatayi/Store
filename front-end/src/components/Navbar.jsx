@@ -117,16 +117,16 @@ function Navbar() {
         )}
       </div>
       <div className="flex items-center gap-6 sm:hidden">
-        <div className="relative cursor-pointer">
+        <div
+          className="relative cursor-pointer"
+          onClick={() => navigate("/cart")}
+        >
           <img
             src={assets.nav_cart_icon}
             alt="cart"
             className="w-6 opacity-80"
           />
-          <button
-            onClick={() => navigate("/cart")}
-            className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full"
-          >
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
             {count}
           </button>
         </div>
@@ -143,32 +143,14 @@ function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="absolute top-full left-0 w-full bg-white shadow-md py-4 flex flex-col items-start gap-2 px-5 text-sm md:hidden z-50">
-          <button
-            onClick={() => {
-              navigate("/seller");
-              setOpen(false);
-            }}
-            className="w-full text-left px-3 py-2 text-sm text-green-700 border border-green-200 rounded-md bg-green-100 hover:bg-green-200 transition"
-          >
-            Seller Dashboard
-          </button>
           <NavLink to="/" onClick={() => setOpen(false)}>
             Home
           </NavLink>
           <NavLink to="/products" onClick={() => setOpen(false)}>
             Products
           </NavLink>
-          <NavLink to="/contact" onClick={() => setOpen(false)}>
-            Contact
-          </NavLink>
           {user && (
-            <NavLink
-              to="/contact"
-              onClick={() => {
-                setOpen(false);
-                setShowUserLogin(true);
-              }}
-            >
+            <NavLink to="/my-orders" onClick={() => setOpen(false)}>
               My Orders
             </NavLink>
           )}
@@ -182,7 +164,10 @@ function Navbar() {
             </button>
           ) : (
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                setShowUserLogin(true);
+              }}
               className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-primary transition text-white rounded-full text-sm"
             >
               Login
