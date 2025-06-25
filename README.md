@@ -2,6 +2,7 @@
 # 🛒Nature's Crate - Full Stack Grocery Store Application
 
 A modern full-stack grocery store web application built with **React**, **Node.js**, **MongoDB**, and **Stripe** for seamless shopping and checkout experiences.
+Users can browse products, manage their cart, and securely complete purchases. Authentication is required to place an order.
 
 
 ## 🔗 Live Demo
@@ -165,6 +166,6 @@ CVC: Any 3 digits
 
 ## 📬 Contact
 
-**Priyanka Tayi** – [tayi.priyanka@gmail.com](mailto:tayi.priyanka@gmail.com)
+**Email Me** – [tayi.priyanka@gmail.com](mailto:tayi.priyanka@gmail.com)
 
-Project Link: [https://github.com/priyankatayi/shopping-cart](https://github.com/priyankatayi/shopping-cart)
+**Project Link:** [https://github.com/priyankatayi/shopping-cart](https://github.com/priyankatayi/shopping-cart)

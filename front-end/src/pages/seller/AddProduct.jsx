@@ -13,7 +13,7 @@ const AddProduct = () => {
     description: "",
   });
 
-  const { navigate, axios } = useAppContext();
+  const { navigate, axios, fetchProducts } = useAppContext();
 
   const onChangeHandler = (e) => {
     e.preventDefault();
@@ -48,6 +48,7 @@ const AddProduct = () => {
           offerPrice: "",
           description: "",
         });
+        await fetchProducts();
         navigate("/seller/product-list");
       } else {
         toast.error(data.message);

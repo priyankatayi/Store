@@ -92,10 +92,9 @@ export const placeOrderStripe = async (req, res) => {
                     userId,
                 },
             },
-            success_url: `${origin}/my-orders`,
+            success_url: `${origin}/loader?orderId=${order._id}`,
             cancel_url:  `${origin}/cart`,
           });
-          console.log(session, "session in checkout")
         res.json({ success: true, url: session.url })
     } catch(error) {
         res.json({success: false, message: error.message})
